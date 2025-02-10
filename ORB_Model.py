@@ -99,9 +99,6 @@ train_start_time = time.time()
 # Extract ORB features for training set
 X_train, y_train = extract_orb_features(X_train_paths, y_train)
 
-# Measure the time taken for feature extraction from the training set
-feature_extraction_train_time = time.time() - train_start_time
-
 # Convert lists to NumPy arrays
 X_train = np.array(X_train)
 y_train = np.array(y_train)
@@ -131,11 +128,11 @@ model.compile(optimizer='adam',
 early_stopping = tf.keras.callbacks.EarlyStopping(
     monitor='val_loss', patience=5, restore_best_weights=True
 )
-model_start_time = time.time()
+
 history = model.fit(X_train_scaled, y_train, epochs=20, batch_size=64, validation_split=0.2, callbacks=[early_stopping])
 
 # Measure total training time
-total_training_time = time.time() - model_start_time
+total_training_time = time.time() - train_start_time
 
 
 # Measure testing time
